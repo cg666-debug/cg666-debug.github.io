@@ -87,7 +87,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/06/09/article-title/">article title</a>
+      <a class="p-name article-title" href="/2023/06/09/article-title/">实现京东滑块验证自动登录</a>
     </h1>
   
 
@@ -95,11 +95,52 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="xxxxx"><a href="#xxxxx" class="headerlink" title="xxxxx"></a>xxxxx</h1>
+        <h3 id="一、环境依赖"><a href="#一、环境依赖" class="headerlink" title="一、环境依赖"></a>一、环境依赖</h3><ul>
+<li>Anaconda version 1.7.2</li>
+<li>Python 3.7.0</li>
+<li>根目录下requirements.txt</li>
+</ul>
+<h3 id="二、环境部署"><a href="#二、环境部署" class="headerlink" title="二、环境部署"></a>二、环境部署</h3><p>在根目录下执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、目录结构"><a href="#三、目录结构" class="headerlink" title="三、目录结构"></a>三、目录结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">|-- JdAutoLogin</span><br><span class="line">    |-- Readme.md   帮助文档</span><br><span class="line">    |-- requirements.txt    环境依赖 </span><br><span class="line">    |-- src</span><br><span class="line">        |-- main.py     定时任务入口文件</span><br><span class="line">        |-- RunSpider.py    自动登录京东可添加后续爬虫代码</span><br><span class="line">        |-- setting</span><br><span class="line">            |-- setting.yaml    配置文件</span><br><span class="line">        |-- Utils.py    工具类</span><br><span class="line">            |--SpiderUtils.py   登录所需工具类和函数</span><br><span class="line">        |-- chromedriver_win32      浏览器驱动</span><br><span class="line">        |   |-- chromedriver.exe    </span><br><span class="line">        |-- images      </span><br><span class="line">        |   |-- background_img.png      滑块验证背景图</span><br><span class="line">        |   |-- out.jpg     滑块缺口位置图</span><br><span class="line">        |   |-- slide_img.png   滑块图</span><br><span class="line">        |-- Login_Accomplish</span><br><span class="line">        |   |-- JdLogin.py  继承基本类实现京东的登录</span><br><span class="line">        |   |-- Login.py    登录基本类</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、项目启动"><a href="#四、项目启动" class="headerlink" title="四、项目启动"></a>四、项目启动</h3><h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>根据需求更改setting.yaml配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">login:</span></span><br><span class="line"><span class="comment"># UserName for logging in to the website</span></span><br><span class="line">  <span class="attr">UserName:</span> <span class="string">&#x27;xxxxx&#x27;</span></span><br><span class="line"><span class="comment"># PassWord for logging in to the website</span></span><br><span class="line">  <span class="attr">PassWord:</span> <span class="string">&#x27;xxxxx&#x27;</span></span><br><span class="line"><span class="comment"># The URL of the login page</span></span><br><span class="line">  <span class="attr">LoginUrl:</span> <span class="string">&#x27;https://passport.jd.com/uc/login&#x27;</span></span><br><span class="line"><span class="comment"># After login, go to the URL of the page</span></span><br><span class="line">  <span class="attr">MainUrl:</span> <span class="string">&#x27;https://www.jd.com/&#x27;</span></span><br><span class="line"><span class="comment"># Number of retries for slider validation</span></span><br><span class="line">  <span class="attr">Retry_times:</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2"><a href="#2" class="headerlink" title="2"></a>2</h4><ul>
+<li>运行定时任务（固定某个时间启动爬虫）<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py</span><br></pre></td></tr></table></figure></li>
+<li>运行一次爬虫<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python RunSpider.py</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="五、项目打包"><a href="#五、项目打包" class="headerlink" title="五、项目打包"></a>五、项目打包</h3><p><strong>如果对项目进行修改需要重新打包成exe</strong></p>
+<ul>
+<li>cd到RunSpider.py同级目录中执行<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyi-makespec RunSpider.py</span><br></pre></td></tr></table></figure></li>
+<li>配置RunSpider.spec文件，具体配置参数可查看<a target="_blank" rel="noopener" href="https://blog.csdn.net/tangfreeze/article/details/112240342">pyinstaller配置文件参数</a></li>
+<li>执行<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller RunSpider.spec</span><br><span class="line">命令执行完后会生成build和dist文件夹</span><br><span class="line"></span><br><span class="line">可能提示</span><br><span class="line">ModuleNotFoundError: No module named &#x27;fake_useragent.data&#x27;</span><br></pre></td></tr></table></figure></li>
+<li>使用手动添加fake-useragent（尝试配置spec自动添加无法成功）<ul>
+<li>确定当前python环境中site-packages的位置<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m site</span><br></pre></td></tr></table></figure></li>
+<li>将 <strong>…&#x2F;site-packages&#x2F;fake-useragent</strong>文件夹复制到 <strong>dist&#x2F;RunSpider&#x2F;</strong> 目录下 </li>
+<li>双击运行 <strong>dist&#x2F;RunSpider&#x2F;RunSpider.exe</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="六、演示Demo"><a href="#六、演示Demo" class="headerlink" title="六、演示Demo"></a>六、演示Demo</h3><p><img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzRiYTFjYzNjNTJiMGY3ZTRkZTUzNjMwNzY4MTYyYTdiYWEzOGZlYSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/2H8Q13nR71cFkD9r3q/giphy.gif" alt="image"></p>
+<h3 id="七、遇到的问题"><a href="#七、遇到的问题" class="headerlink" title="七、遇到的问题"></a>七、遇到的问题</h3><h4 id="1、使用selenium的ActionChains类实现滑块验证登录问题"><a href="#1、使用selenium的ActionChains类实现滑块验证登录问题" class="headerlink" title="1、使用selenium的ActionChains类实现滑块验证登录问题"></a>1、使用selenium的ActionChains类实现滑块验证登录问题</h4><ul>
+<li>虚拟鼠标：ActionChains类对鼠标的一系列点击移动操作都是<strong>建立在虚拟鼠标</strong>上的，电脑屏幕上实际看到的鼠标不会移动。</li>
+<li>滑块移动轨迹问题：使用ActionChains需要自己生成滑块移动的轨迹方程，但是京东将大部分机器模拟的轨迹方程给禁止了导致正确移动到缺口位置也无法通过验证。<strong>使用pyautogui控制滑块移动的轨迹更贴合人工操作。</strong></li>
+</ul>
+<h4 id="2、使用pyautogui控制鼠标的坐标问题"><a href="#2、使用pyautogui控制鼠标的坐标问题" class="headerlink" title="2、使用pyautogui控制鼠标的坐标问题"></a>2、使用pyautogui控制鼠标的坐标问题</h4><ul>
+<li>selenium能够直接获取网页元素然后进行操作，pyautogui必需通过获取要操作元素的坐标才能对元素进行操作。</li>
+<li>selenium中也能获取元素的坐标，但是该坐标是相对于<strong>整个网页的左上角</strong>的坐标。而pyautogui中要使用的元素的坐标是相对于<strong>整个电脑屏幕左上角</strong>的坐标。所以两者要进行一次转换。</li>
+</ul>
+<h4 id="3、自动登录京东会遇到手机验证码"><a href="#3、自动登录京东会遇到手机验证码" class="headerlink" title="3、自动登录京东会遇到手机验证码"></a>3、自动登录京东会遇到手机验证码</h4><ul>
+<li>通过账号密码登录即使通过滑块验证也需要获取手机验证码。京东手机验证码的cookie有效时间是一个月，所以每隔一个月运行脚本时要重新获取一次手机验证码</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/06/09/article-title/" data-id="clio0qk8u0000wsus1kx1fycv" data-title="article title" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/06/09/article-title/" data-id="clio0qk8u0000wsus1kx1fycv" data-title="实现京东滑块验证自动登录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -142,7 +183,7 @@
       <ul>
         
           <li>
-            <a href="/2023/06/09/article-title/">article title</a>
+            <a href="/2023/06/09/article-title/">实现京东滑块验证自动登录</a>
           </li>
         
       </ul>
