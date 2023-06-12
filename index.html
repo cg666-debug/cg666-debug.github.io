@@ -131,7 +131,7 @@
 <meta property="og:description" content="永远喜欢二次元和库里的一个小码农">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="橙鸽">
-<meta property="article:tag" content="橙鸽,github">
+<meta property="article:tag" content="橙鸽,github,java,高并发,分布式">
 <meta name="twitter:card" content="summary">
 
 
@@ -225,9 +225,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-fa fa-home"></i> <br />
             
             Home
           </a>
@@ -235,9 +235,9 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/%20" rel="section">
+          <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-fa fa-user"></i> <br />
             
             About
           </a>
@@ -245,9 +245,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/%20" rel="section">
+          <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-fa fa-tags"></i> <br />
             
             Tags
           </a>
@@ -255,9 +255,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/%20" rel="section">
+          <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-fa fa-th"></i> <br />
             
             Categories
           </a>
@@ -265,9 +265,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-fa fa-archive"></i> <br />
             
             Archives
           </a>
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/09/categories/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/12/java-UT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -359,7 +359,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2023/06/09/categories/" itemprop="url">categories</a></h1>
+                <a class="post-title-link" href="/2023/06/12/java-UT/" itemprop="url">java 单元测试</a></h1>
         
 
         <div class="post-meta">
@@ -371,8 +371,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-09T16:23:52+08:00">
-                2023-06-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-12T18:29:29+08:00">
+                2023-06-12
               </time>
             
 
@@ -381,6 +381,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -411,7 +433,81 @@
       
         
           
-            
+            <h1 id="小谈-Java-单元测试"><a href="#小谈-Java-单元测试" class="headerlink" title="小谈 Java 单元测试"></a>小谈 Java 单元测试</h1><h2 id="什么是UT"><a href="#什么是UT" class="headerlink" title="什么是UT?"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">什么是UT?</a></h2><p>UT（Unit Test）即单元测试</p>
+<h2 id="UT有什么价值"><a href="#UT有什么价值" class="headerlink" title="UT有什么价值?"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">UT有什么价值?</a></h2><p>大部分的开发都不喜欢写UT，原因无非以下几点：</p>
+<ol>
+<li>产品经理天天催进度，哪有时间写UT</li>
+<li>UT是测试自己的代码，自测？那要QA何用？</li>
+<li>自测能测出bug？都是基于自身思维，就像考试做完第一遍，第二遍检查一样，基本检查不出什么东西</li>
+<li>UT维护成本太高,投入产出比太低</li>
+<li>不会写UT</li>
+</ol>
+<p>总之有无数种理由不想写UT，作为工作不到三年的菜鸟深有体会。之前在点评工作的时候，团队的“UT”都集中于RPC的服务端。为啥带双引号？因为RPC的服务端没有页面可以功能测试，部署到测试环境测试太麻烦，只能写UT了。在这个场景下我认为叫“验证”更合适，验证不等于测试。验证往往只写主逻辑是否通过，且就一个Case，且没有Assert，有的是System.out。</p>
+<p>本人实习的时候做测试的，那时候知道一个测试模型。如下图：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/JdLkEI9sZfcy5aWCuluxG8ssO0QzVauV323q3FHE6H3jO6eMubQjbgklU0R9A9RiaEpcaNJJSSuIuPBnvG4xrqw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片">(图一)</p>
+<p>图的意思就是越底层做的测试效果越好，越往上则越差。也就是说大部分公司现在做的功能测试其实是效果最差的一种测试方式。另外，QA界有个现场：大家都知道功能测试没技术含量，那如何使自己突出呢？答案就是：自动化测试。现实是没几个公司能做好自动化测试， 业界做的比较好的百度算一个。那么为啥自动化测试这么难做的？在这个模型当中，越往上黑盒越大，自动化测试难度就越大。这句话反过来就是越往下自动化测试就越好做？没错，UT其实是最容易实现且效果最好的自动化测试。所以在很多公司出现一种现场：QA写UT。原因总结一下就两点：开发不愿意写UT，QA想自动化测试解放自己。以上的模型只是理论上说明UT具有巨大的价值，但是真的如此么？我只想说，只有真正尝到UT的好处的甜头才会意识到UT的价值。</p>
+<h1 id="Unit-Test-amp-Integration-Test"><a href="#Unit-Test-amp-Integration-Test" class="headerlink" title="Unit Test &amp; Integration Test"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">Unit Test &amp; Integration Test</a></h1><p>单元测试和集成测试的界线我相信大部分开发也是不清晰的。个人理解单元测试针对于一块业务逻辑最小的单元，太抽象。物理上可以简单理解为一个类的方法， 可以是public方法也可以是private方法。一个单元测试不应该包含外部依赖的逻辑，反之就是集成测试了。问题的核心就在于此。一个service的一个接口实现可能依赖很多第三方：1.本地其它的service 2.dao调用 3.rpc调用 4.微服务调用。如下图： </p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/JdLkEI9sZfcy5aWCuluxG8ssO0QzVauVlYzGkPyfQvrChAk23bsLsa2OkSkAwJsBYdSapKrFA1RicmtfeUegfgA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片">图二</p>
+<p>也就是说你的单元测试，真正调用了外部依赖那就是集成测试。这其实很常见对不？我们先说这种情况下如何集成测试。</p>
+<h2 id="Local-Integration-Test"><a href="#Local-Integration-Test" class="headerlink" title="Local Integration Test"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">Local Integration Test</a></h2><p>本地集成测试也就是说不依赖与其他进程。包括：service依赖其他本地service或者dao的情况。在讲述如何集成测试之前，我们先理一下测试模型，测试主要包含三块内容：1.数据准备 2.执行逻辑 3.输出验证。</p>
+<h3 id="第一步：数据准备"><a href="#第一步：数据准备" class="headerlink" title="第一步：数据准备"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">第一步：数据准备</a></h3><p>在本地集成测试里，数据来源基本上来自于dao，dao来自于sql。也就是在执行一个case之前，执行一些sql脚本，数据库则使用h2这类memory database， 切记不要依赖公司测试环境的db。下图是使用spring-test框架的一个case，可以在case执行之前准备我们所需要的各种数据， 另外在执行完case之后，执行clean.sql脚本来清理脏数据。<strong>这里也说明一个case的执行环境是完全独立的，case之间互不干扰，这很重要。</strong></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect"><img src="https://mmbiz.qpic.cn/mmbiz_png/JdLkEI9sZfcy5aWCuluxG8ssO0QzVauV24uuOPSpibsL5icaBDKILBvpM8XwjzhvXt4Fwibm3TUV04Oftegl2syQA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></a></h3><h3 id="第二步：执行逻辑最简单，就是调用一下我们测试的方法即可"><a href="#第二步：执行逻辑最简单，就是调用一下我们测试的方法即可" class="headerlink" title="第二步：执行逻辑最简单，就是调用一下我们测试的方法即可"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">第二步：执行逻辑最简单，就是调用一下我们测试的方法即可</a></h3><h3 id="第三步：验证"><a href="#第三步：验证" class="headerlink" title="第三步：验证"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">第三步：验证</a></h3><p>集成测试一般是调用service，或者dao的接口验证。</p>
+<p>举个例子：CRUD操作的集成测试</p>
+<ol>
+<li>调用C接口</li>
+<li>调用R接口，验证C成功</li>
+<li>调用U接口</li>
+<li>调用R接口，验证U成功</li>
+<li>调用D接口</li>
+<li>调用R接口，验证D成功</li>
+</ol>
+<h2 id="Remote-Integration-Test"><a href="#Remote-Integration-Test" class="headerlink" title="Remote Integration Test"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">Remote Integration Test</a></h2><p>假设我们一个service实现依赖某个RPC Service</p>
+<h3 id="第一步：数据准备-1"><a href="#第一步：数据准备-1" class="headerlink" title="第一步：数据准备"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">第一步：数据准备</a></h3><p>跑到别人家的数据库插几条数据？或者跟PRC Service的Owner商量好，搭一个测试环境供我们测试？有些公司还真有专门的自动化测试环境，那么即使有测试环境，那如何实现各种case场景下，第三方Service很配合的返回数据给我们？想想都蛋疼。</p>
+<h3 id="第二步：执行方法"><a href="#第二步：执行方法" class="headerlink" title="第二步：执行方法"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">第二步：执行方法</a></h3><p>假设我们成功的解决了第一步中的问题，皆大欢喜。现在来看第二步，假设我们的service里面调用了另一个RPC Service创建了很多数据，跑了无数次case，结果….RPC Service对应的数据库都是我们的脏数据，如何清理？而且他们敢随便删数据吗？想想也蛋疼。</p>
+<h3 id="第三步：输出验证"><a href="#第三步：输出验证" class="headerlink" title="第三步：输出验证"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">第三步：输出验证</a></h3><p>假设我们又愉快的解决了第二步中的问题。现在来看第三步，假设我们的方法执行最终输出是创建了一个订单，订单当然是调用订单Service接口了，那么我们如何验证订单是否成功创建了呢？或许可以调用订单Service查询订单的接口来验证。很明显大多数情况下并没有这么完美。想想也蛋疼呀。</p>
+<p>通过以上分析，Local Integration Test是可行的，Remote Integration Test基本不可行。</p>
+<p>那么有没有什么办法解决呢？答案就是Mock</p>
+<ul>
+<li>第一步：Mock RPC Service 想返回什么数据就返回什么数据</li>
+<li>第二步：还是Mock接口，想调用几次就调用几次</li>
+<li>第三步：这一步等到下面讲完单元测试就明白了</li>
+</ul>
+<h2 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">Unit Test</a></h2><p>上面我们谈到Mock可以解决外部依赖的问题，现在有很多Mock的开源框架比如：mockito。那么问题来了，既然我们可以mock第三方远程依赖，为何不mock dao、local service呢？没错外部依赖全部mock掉，就是单元测试了。因为我们只关心所测试的方法的业务逻辑，也就是真正高内聚的逻辑单元了。如下图：</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect"><img src="https://mmbiz.qpic.cn/mmbiz_png/JdLkEI9sZfcy5aWCuluxG8ssO0QzVauVAicjofOEibNqf9oNpYJ7VQC2ItM1MhPxTZcaP3FeoibZhd7khsObg0lkw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></a></h3><p>好处如下：</p>
+<ol>
+<li>没有什么数据是造不出来的，通通返回Mock的对象</li>
+<li>代码中的异常处理代码，也可以通过mock接口，使之抛出异常</li>
+<li>不产生任何脏数据</li>
+<li>跑case更快了，因为不用启动整个项目，相当于Main方法</li>
+</ol>
+<p>有人会说，都mock了还测试个蛋蛋。</p>
+<p>这就是对于单元测试的理解了，单元测试应该只针对于目标方法的业务逻辑测试，dao、其它service应该在它们自身的单元测试去测试。对于依赖的第三方，我们应该信任它们能正确的完成我们所预期的。这句话很难理解对不对？</p>
+<p>举几个例子</p>
+<p>例子一：方法的最后是执行dao的create操作，那么该如何验证？</p>
+<p>我们应该验证的内容是：</p>
+<ol>
+<li>dao的create方法被调用了</li>
+<li>调用次数是对的</li>
+<li>调用参数也是对的</li>
+</ol>
+<p>没错，只要这三个验证通过，那么这个case执行就是通过的。因为我们相信dao的create操作能正确的完成我们所预期的，只要我们调用了正确的次数并且参数都是对的。dao的执行的正确性保证是在该dao的单元测试做的。在Remote Integration Test里面第三步验证道理是一样的，我们应该验证RPC接口被调用了且次数和参数都是对的，那么我们的case就算通过了，至于，RPC服务端是否正确执行是它们的事情不是我们所关心的。Mockito框架的verify接口就是做这件事情的。如果你理解了上述内容，那么你就开窍了，UT不在变得这么难写。</p>
+<p>什么时候用单元测试，什么时候用集成测试？</p>
+<p>在本人的实践中摸索发现，对于简单的业务，比如crud型的瘦service，比较适合于集成测试。</p>
+<p>以下情况适合于单元测试：</p>
+<ol>
+<li>Util类</li>
+<li>含有远程调用的方法</li>
+<li>输入少，业务逻辑复杂的方法</li>
+<li>需要异常处理的方法</li>
+</ol>
+<h1 id="case细到什么程度为好？"><a href="#case细到什么程度为好？" class="headerlink" title="case细到什么程度为好？"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">case细到什么程度为好？</a></h1><p>这个问题也是比较经典的，一个方法要是所有的路径都覆盖到，那么要写很多的case，说真的累死人。我的建议是两个原则：</p>
+<ol>
+<li>核心逻辑，容易出错的逻辑一定要覆盖到</li>
+<li>根据自己的时间。没必要写的非常多，毕竟case维护成本很高，业务逻辑一改，case得跟着改。</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">总结</a></h1><p>本人目前在从事于开源项目(Apollo(配置中心))研发，开源项目对代码质量要求相对来说高一些，UT当然是很重要的一环。刚开始也不会写UT，当然态度上也不重视UT。老大的代码UT覆盖率很高，抱着对开源负责的态度慢慢接受学习UT，到后来尝了几次甜头后，发现UT真的很实用，价值也很高，但是很遗憾UT被大部分开发所忽略。当然本人对UT的理解、实践还不够，仍需继续实践模式。</p>
+<p>最后说一句：当开发完功能，跑完UT，你可以放心的上线了的时候，你的UT就成功了。\</p>
+
           
         
       
@@ -676,7 +772,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/%20%7C%7C%20archive">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
@@ -688,8 +784,8 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -699,8 +795,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1258,5 +1354,18 @@
 
   
 
+
+  <!-- 引入jQuery -->
+  
+
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+
 <script src="/live2dw/lib/L2Dwidget.min.js?95010b98e01c6f9662a8fd204469cabc"></script><script>L2Dwidget.init({"dialog":{"enable":true,"hitokoto":false,"text":["跟我一起喊：橙鸽赛高！","kira kira doki doki","二次元万岁！"]},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":20,"vOffset":0},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
 </html>
+
