@@ -56,7 +56,7 @@
   </entry>
   <entry>
     <title>java 单元测试</title>
-    <url>/2023/05/28/java-UT/</url>
+    <url>/2023/05/31/java-UT/</url>
     <content><![CDATA[<h1 id="小谈-Java-单元测试"><a href="#小谈-Java-单元测试" class="headerlink" title="小谈 Java 单元测试"></a>小谈 Java 单元测试</h1><h2 id="什么是UT"><a href="#什么是UT" class="headerlink" title="什么是UT?"></a><a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">什么是UT?</a></h2><p>UT（Unit Test）即单元测试</p>
 <h2 id="UT有什么价值"><a href="#UT有什么价值" class="headerlink" title="UT有什么价值?"></a><a href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">UT有什么价值?</a></h2><p>大部分的开发都不喜欢写UT，原因无非以下几点：</p>
 <ol>
