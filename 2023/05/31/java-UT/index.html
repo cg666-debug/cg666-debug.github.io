@@ -123,15 +123,15 @@
 
 
 
-<meta name="description" content="小谈 Java 单元测试什么是UT?UT（Unit Test）即单元测试 UT有什么价值?大部分的开发都不喜欢写UT，原因无非以下几点：  产品经理天天催进度，哪有时间写UT UT是测试自己的代码，自测？那要QA何用？ 自测能测出bug？都是基于自身思维，就像考试做完第一遍，第二遍检查一样，基本检查不出什么东西 UT维护成本太高,投入产出比太低 不会写UT  总之有无数种理由不想写UT，作为工作不">
+<meta name="description" content="小谈 Java 单元测试什么是UT?UT（Unit Test）即单元测试 UT有什么价值?大部分的开发都不喜欢写UT，原因无非以下几点：  产品经理天天催进度，哪有时间写UT UT是测试自己的代码，自测？那要QA何用？ 自测能测出bug？都是基于自身思维，就像考试做完第一遍，第二遍检查一样，基本检查不出什么东西 UT维护成本太高,投入产出比太低 不会写UT  总之有无数种理由不想写UT，团队的“U">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java 单元测试">
 <meta property="og:url" content="http://example.com/2023/05/31/java-UT/index.html">
 <meta property="og:site_name" content="Ruc第一鸽">
-<meta property="og:description" content="小谈 Java 单元测试什么是UT?UT（Unit Test）即单元测试 UT有什么价值?大部分的开发都不喜欢写UT，原因无非以下几点：  产品经理天天催进度，哪有时间写UT UT是测试自己的代码，自测？那要QA何用？ 自测能测出bug？都是基于自身思维，就像考试做完第一遍，第二遍检查一样，基本检查不出什么东西 UT维护成本太高,投入产出比太低 不会写UT  总之有无数种理由不想写UT，作为工作不">
+<meta property="og:description" content="小谈 Java 单元测试什么是UT?UT（Unit Test）即单元测试 UT有什么价值?大部分的开发都不喜欢写UT，原因无非以下几点：  产品经理天天催进度，哪有时间写UT UT是测试自己的代码，自测？那要QA何用？ 自测能测出bug？都是基于自身思维，就像考试做完第一遍，第二遍检查一样，基本检查不出什么东西 UT维护成本太高,投入产出比太低 不会写UT  总之有无数种理由不想写UT，团队的“U">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-31T10:29:29.000Z">
-<meta property="article:modified_time" content="2023-06-12T11:10:02.110Z">
+<meta property="article:modified_time" content="2023-06-13T03:41:43.478Z">
 <meta property="article:author" content="橙鸽">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="Unit Test">
@@ -440,7 +440,9 @@
 <li>UT维护成本太高,投入产出比太低</li>
 <li>不会写UT</li>
 </ol>
-<p>总之有无数种理由不想写UT，作为工作不到三年的菜鸟深有体会。之前在点评工作的时候，团队的“UT”都集中于RPC的服务端。为啥带双引号？因为RPC的服务端没有页面可以功能测试，部署到测试环境测试太麻烦，只能写UT了。在这个场景下我认为叫“验证”更合适，验证不等于测试。验证往往只写主逻辑是否通过，且就一个Case，且没有Assert，有的是System.out。</p>
+<p>总之有无数种理由不想写UT，团队的“UT”都集中于RPC的服务端。为啥带双引号？因为RPC的服务端没有页面可以功能测试，部署到测试环境测试太麻烦，只能写UT了。在这个场景下我认为叫“验证”更合适，验证不等于测试。验证往往只写主逻辑是否通过，且就一个Case，且没有Assert，有的是System.out。</p>
+<span id="more"></span>
+
 <p>本人实习的时候做测试的，那时候知道一个测试模型。</p>
 <p>越底层做的测试效果越好，越往上则越差。也就是说大部分公司现在做的功能测试其实是效果最差的一种测试方式。另外，QA界有个现场：大家都知道功能测试没技术含量，那如何使自己突出呢？答案就是：自动化测试。现实是没几个公司能做好自动化测试， 业界做的比较好的百度算一个。那么为啥自动化测试这么难做的？在这个模型当中，越往上黑盒越大，自动化测试难度就越大。这句话反过来就是越往下自动化测试就越好做？没错，UT其实是最容易实现且效果最好的自动化测试。所以在很多公司出现一种现场：QA写UT。原因总结一下就两点：开发不愿意写UT，QA想自动化测试解放自己。以上的模型只是理论上说明UT具有巨大的价值，但是真的如此么？我只想说，只有真正尝到UT的好处的甜头才会意识到UT的价值。</p>
 <h1 id="Unit-Test-amp-Integration-Test"><a href="#Unit-Test-amp-Integration-Test" class="headerlink" title="Unit Test &amp; Integration Test"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUzMTA2NTU2Ng==&mid=2247487551&idx=1&sn=18f64ba49f3f0f9d8be9d1fdef8857d9&scene=21#wechat_redirect">Unit Test &amp; Integration Test</a></h1><p>单元测试和集成测试的界线我相信大部分开发也是不清晰的。个人理解单元测试针对于一块业务逻辑最小的单元，太抽象。物理上可以简单理解为一个类的方法， 可以是public方法也可以是private方法。一个单元测试不应该包含外部依赖的逻辑，反之就是集成测试了。问题的核心就在于此。一个service的一个接口实现可能依赖很多第三方：1.本地其它的service 2.dao调用 3.rpc调用 4.微服务调用。</p>
