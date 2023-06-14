@@ -1,70 +1,1115 @@
-<h1 id="FastClick"><a href="#FastClick" class="headerlink" title="FastClick"></a>FastClick</h1><p>FastClick is a simple, easy-to-use library for eliminating the 300ms delay between a physical tap and the firing of a <code>click</code> event on mobile browsers. The aim is to make your application feel less laggy and more responsive while avoiding any interference with your current logic.</p>
-<p>FastClick is developed by <a href="http://labs.ft.com/">FT Labs</a>, part of the Financial Times.</p>
-<p><a href="http://maxime.sh/2013/02/supprimer-le-lag-des-clics-sur-mobile-avec-fastclick/">Explication en français</a>.</p>
-<p><a href="https://developer.mozilla.org/ja/docs/Mozilla/Firefox_OS/Apps/Tips_and_techniques#Make_events_immediate">日本語で説明</a>。</p>
-<h2 id="Why-does-the-delay-exist"><a href="#Why-does-the-delay-exist" class="headerlink" title="Why does the delay exist?"></a>Why does the delay exist?</h2><p>According to <a href="https://developers.google.com/mobile/articles/fast_buttons">Google</a>:</p>
-<blockquote>
-<p>…mobile browsers will wait approximately 300ms from the time that you tap the button to fire the click event. The reason for this is that the browser is waiting to see if you are actually performing a double tap.</p>
-</blockquote>
-<h2 id="Compatibility"><a href="#Compatibility" class="headerlink" title="Compatibility"></a>Compatibility</h2><p>The library has been deployed as part of the <a href="http://app.ft.com/">FT Web App</a> and is tried and tested on the following mobile browsers:</p>
-<ul>
-<li>Mobile Safari on iOS 3 and upwards</li>
-<li>Chrome on iOS 5 and upwards</li>
-<li>Chrome on Android (ICS)</li>
-<li>Opera Mobile 11.5 and upwards</li>
-<li>Android Browser since Android 2</li>
-<li>PlayBook OS 1 and upwards</li>
-</ul>
-<h2 id="When-it-isn’t-needed"><a href="#When-it-isn’t-needed" class="headerlink" title="When it isn’t needed"></a>When it isn’t needed</h2><p>FastClick doesn’t attach any listeners on desktop browsers.</p>
-<p>Chrome 32+ on Android with <code>width=device-width</code> in the <a href="https://developer.mozilla.org/en-US/docs/Mobile/Viewport_meta_tag">viewport meta tag</a> doesn’t have a 300ms delay, therefore listeners aren’t attached.</p>
-<pre><code class="html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-</code></pre>
-<p>Same goes for Chrome on Android (all versions) with <code>user-scalable=no</code> in the viewport meta tag. But be aware that <code>user-scalable=no</code> also disables pinch zooming, which may be an accessibility concern.</p>
-<p>For IE11+, you can use <code>touch-action: manipulation;</code> to disable double-tap-to-zoom on certain elements (like links and buttons).  For IE10 use <code>-ms-touch-action: manipulation</code>.</p>
-<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Include fastclick.js in your JavaScript bundle or add it to your HTML page like this:</p>
-<pre><code class="html">&lt;script type=&#39;application/javascript&#39; src=&#39;/path/to/fastclick.js&#39;&gt;&lt;/script&gt;
-</code></pre>
-<p>The script must be loaded prior to instantiating FastClick on any element of the page.</p>
-<p>To instantiate FastClick on the <code>body</code>, which is the recommended method of use:</p>
-<pre><code class="js">if (&#39;addEventListener&#39; in document) {
-    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
-        FastClick.attach(document.body);
-    }, false);
-}
-</code></pre>
-<p>Or, if you’re using jQuery:</p>
-<pre><code class="js">$(function() {
-    FastClick.attach(document.body);
-});
-</code></pre>
-<p>If you’re using Browserify or another CommonJS-style module system, the <code>FastClick.attach</code> function will be returned when you call <code>require(&#39;fastclick&#39;)</code>. As a result, the easiest way to use FastClick with these loaders is as follows:</p>
-<pre><code class="js">var attachFastClick = require(&#39;fastclick&#39;);
-attachFastClick(document.body);
-</code></pre>
-<h3 id="Minified"><a href="#Minified" class="headerlink" title="Minified"></a>Minified</h3><p>Run <code>make</code> to build a minified version of FastClick using the Closure Compiler REST API. The minified file is saved to <code>build/fastclick.min.js</code> or you can <a href="http://build.origami.ft.com/bundles/js?modules=fastclick">download a pre-minified version</a>.</p>
-<p>Note: the pre-minified version is built using <a href="http://origami.ft.com/docs/developer-guide/build-service/">our build service</a> which exposes the <code>FastClick</code> object through <code>Origami.fastclick</code> and will have the Browserify&#x2F;CommonJS API (see above).</p>
-<pre><code class="js">var attachFastClick = Origami.fastclick;
-attachFastClick(document.body);
-</code></pre>
-<h3 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h3><p>FastClick has AMD (Asynchronous Module Definition) support. This allows it to be lazy-loaded with an AMD loader, such as <a href="http://requirejs.org/">RequireJS</a>. Note that when using the AMD style require, the full <code>FastClick</code> object will be returned, <em>not</em> <code>FastClick.attach</code></p>
-<pre><code class="js">var FastClick = require(&#39;fastclick&#39;);
-FastClick.attach(document.body, options);
-</code></pre>
-<h3 id="Package-managers"><a href="#Package-managers" class="headerlink" title="Package managers"></a>Package managers</h3><p>You can install FastClick using <a href="https://github.com/component/component">Component</a>, <a href="https://npmjs.org/package/fastclick">npm</a> or <a href="http://bower.io/">Bower</a>.</p>
-<p>For Ruby, there’s a third-party gem called <a href="http://rubygems.org/gems/fastclick-rails">fastclick-rails</a>. For .NET there’s a <a href="http://nuget.org/packages/FastClick">NuGet package</a>.</p>
-<h2 id="Advanced"><a href="#Advanced" class="headerlink" title="Advanced"></a>Advanced</h2><h3 id="Ignore-certain-elements-with-needsclick"><a href="#Ignore-certain-elements-with-needsclick" class="headerlink" title="Ignore certain elements with needsclick"></a>Ignore certain elements with <code>needsclick</code></h3><p>Sometimes you need FastClick to ignore certain elements. You can do this easily by adding the <code>needsclick</code> class.</p>
-<pre><code class="html">&lt;a class=&quot;needsclick&quot;&gt;Ignored by FastClick&lt;/a&gt;
-</code></pre>
-<h4 id="Use-case-1-non-synthetic-click-required"><a href="#Use-case-1-non-synthetic-click-required" class="headerlink" title="Use case 1: non-synthetic click required"></a>Use case 1: non-synthetic click required</h4><p>Internally, FastClick uses <code>document.createEvent</code> to fire a synthetic <code>click</code> event as soon as <code>touchend</code> is fired by the browser. It then suppresses the additional <code>click</code> event created by the browser after that. In some cases, the non-synthetic <code>click</code> event created by the browser is required, as described in the <a href="http://ftlabs.github.com/fastclick/examples/focus.html">triggering focus example</a>.</p>
-<p>This is where the <code>needsclick</code> class comes in. Add the class to any element that requires a non-synthetic click.</p>
-<h4 id="Use-case-2-Twitter-Bootstrap-2-2-2-dropdowns"><a href="#Use-case-2-Twitter-Bootstrap-2-2-2-dropdowns" class="headerlink" title="Use case 2: Twitter Bootstrap 2.2.2 dropdowns"></a>Use case 2: Twitter Bootstrap 2.2.2 dropdowns</h4><p>Another example of when to use the <code>needsclick</code> class is with dropdowns in Twitter Bootstrap 2.2.2. Bootstrap add its own <code>touchstart</code> listener for dropdowns, so you want to tell FastClick to ignore those. If you don’t, touch devices will automatically close the dropdown as soon as it is clicked, because both FastClick and Bootstrap execute the synthetic click, one opens the dropdown, the second closes it immediately after.</p>
-<pre><code class="html">&lt;a class=&quot;dropdown-toggle needsclick&quot; data-toggle=&quot;dropdown&quot;&gt;Dropdown&lt;/a&gt;
-</code></pre>
-<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><p>FastClick is designed to cope with many different browser oddities. Here are some examples to illustrate this:</p>
-<ul>
-<li><a href="http://ftlabs.github.com/fastclick/examples/layer.html">basic use</a> showing the increase in perceived responsiveness</li>
-<li><a href="http://ftlabs.github.com/fastclick/examples/focus.html">triggering focus</a> on an input element from a <code>click</code> handler</li>
-<li><a href="http://ftlabs.github.com/fastclick/examples/input.html">input element</a> which never receives clicks but gets fast focus</li>
-</ul>
-<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><p>There are no automated tests. The files in <code>tests/</code> are manual reduced test cases. We’ve had a think about how best to test these cases, but they tend to be very browser&#x2F;device specific and sometimes subjective which means it’s not so trivial to test.</p>
-<h2 id="Credits-and-collaboration"><a href="#Credits-and-collaboration" class="headerlink" title="Credits and collaboration"></a>Credits and collaboration</h2><p>FastClick is maintained by <a href="http://twitter.com/rowanbeentje">Rowan Beentje</a>, <a href="http://twitter.com/mcaruanagalizia">Matthew Caruana Galizia</a> and <a href="http://twitter.com/andrewsmatt">Matthew Andrews</a> at <a href="http://labs.ft.com/">FT Labs</a>. All open source code released by FT Labs is licenced under the MIT licence. We welcome comments, feedback and suggestions.  Please feel free to raise an issue or pull request.</p>
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<meta name="google-site-verification" content="olq-MIA35BpTZbEcxW_7QAKwIpajGFb9hTzERHpxiyQ" />
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-flash.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hexo NexT Share Content Sharing Services for NexT. Install1npm install theme-next&#x2F;hexo-next-share  ConfigureYou can config those in both hexo or theme _config.yml. LikelyEdit the configurations in lik">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ruc第一鸽">
+<meta property="og:url" content="http://cg666-debug.github.io/lib/fastclick/README.html">
+<meta property="og:site_name" content="Ruc第一鸽">
+<meta property="og:description" content="Hexo NexT Share Content Sharing Services for NexT. Install1npm install theme-next&#x2F;hexo-next-share  ConfigureYou can config those in both hexo or theme _config.yml. LikelyEdit the configurations in lik">
+<meta property="og:locale">
+<meta property="og:image" content="https://img.shields.io/badge/NexT-v7.3.0+-blue.svg?style=flat-square">
+<meta property="og:image" content="https://img.shields.io/github/package-json/v/theme-next/hexo-next-share?style=flat-square">
+<meta property="article:published_time" content="2023-06-14T06:32:18.384Z">
+<meta property="article:modified_time" content="2023-06-14T06:32:18.384Z">
+<meta property="article:author" content="橙鸽">
+<meta property="article:tag" content="橙鸽,github,java,高并发,分布式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.shields.io/badge/NexT-v7.3.0+-blue.svg?style=flat-square">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","Pisces":500,"width":500,"display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://cg666-debug.github.io/lib/fastclick/README.html"/>
+
+
+
+
+
+  <title> | Ruc第一鸽</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ruc第一鸽</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">橙鸽</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline"></h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <h1 id="Hexo-NexT-Share"><a href="#Hexo-NexT-Share" class="headerlink" title="Hexo NexT Share"></a>Hexo NexT Share</h1><p><img src="https://img.shields.io/badge/NexT-v7.3.0+-blue.svg?style=flat-square" alt="Theme Version"><br><img src="https://img.shields.io/github/package-json/v/theme-next/hexo-next-share?style=flat-square" alt="Package Version"></p>
+<p>Content Sharing Services for NexT.</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install theme-next/hexo-next-share</span><br></pre></td></tr></table></figure>
+
+<h2 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h2><p>You can config those in both <strong>hexo</strong> or <strong>theme</strong> <code>_config.yml</code>.</p>
+<h4 id="Likely"><a href="#Likely" class="headerlink" title="Likely"></a>Likely</h4><p>Edit the configurations in <code>likely</code> section in the theme config file as following:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Likely Share</span></span><br><span class="line"><span class="comment"># See: https://ilyabirman.net/projects/likely/, https://github.com/ilyabirman/Likely</span></span><br><span class="line"><span class="comment"># Likely supports four looks, nine social networks, any button text.</span></span><br><span class="line"><span class="comment"># You are free to modify the text value and order of any network.</span></span><br><span class="line"><span class="attr">likely:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">cdn:</span></span><br><span class="line">    <span class="attr">js:</span> <span class="string">//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.min.js</span></span><br><span class="line">    <span class="attr">css:</span> <span class="string">//cdn.jsdelivr.net/npm/ilyabirman-likely@2/release/likely.min.css</span></span><br><span class="line">  <span class="attr">look:</span> <span class="string">normal</span> <span class="comment"># available values: normal, light, small, big</span></span><br><span class="line">  <span class="attr">networks:</span></span><br><span class="line">    <span class="attr">twitter:</span> <span class="string">Tweet</span></span><br><span class="line">    <span class="attr">facebook:</span> <span class="string">Share</span></span><br><span class="line">    <span class="attr">linkedin:</span> <span class="string">Link</span></span><br><span class="line">    <span class="attr">gplus:</span> <span class="string">Plus</span></span><br><span class="line">    <span class="attr">vkontakte:</span> <span class="string">Share</span></span><br><span class="line">    <span class="attr">odnoklassniki:</span> <span class="string">Class</span></span><br><span class="line">    <span class="attr">telegram:</span> <span class="string">Send</span></span><br><span class="line">    <span class="attr">whatsapp:</span> <span class="string">Send</span></span><br><span class="line">    <span class="attr">pinterest:</span> <span class="string">Pin</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Need-More-Share"><a href="#Need-More-Share" class="headerlink" title="Need More Share"></a>Need More Share</h4><p>Set the value <code>enable</code> to <code>true</code>, and edit other configurations in <code>needmoreshare</code> section in the theme config file as following:</p>
+<figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># NeedMoreShare2</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/theme-next-needmoreshare2</span></span><br><span class="line"><span class="comment"># For more information: https://github.com/revir/need-more-share2</span></span><br><span class="line"><span class="comment"># iconStyle: default | box</span></span><br><span class="line"><span class="comment"># boxForm: horizontal | vertical</span></span><br><span class="line"><span class="comment"># position: top / middle / bottom + Left / Center / Right</span></span><br><span class="line"><span class="comment"># networks:</span></span><br><span class="line"><span class="comment"># Weibo | Wechat | Douban | QQZone | Twitter | Facebook | Linkedin | Mailto | Reddit | Delicious | StumbleUpon | Pinterest</span></span><br><span class="line"><span class="comment"># GooglePlus | Tumblr | GoogleBookmarks | Newsvine | Evernote | Friendfeed | Vkontakte | Odnoklassniki | Mailru</span></span><br><span class="line"><span class="attr">needmoreshare:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">cdn:</span></span><br><span class="line">    <span class="attr">js:</span> <span class="string">//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.js</span></span><br><span class="line">    <span class="attr">css:</span> <span class="string">//cdn.jsdelivr.net/gh/theme-next/theme-next-needmoreshare2@1/needsharebutton.min.css</span></span><br><span class="line">  <span class="attr">postbottom:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">options:</span></span><br><span class="line">      <span class="attr">iconStyle:</span> <span class="string">box</span></span><br><span class="line">      <span class="attr">boxForm:</span> <span class="string">horizontal</span></span><br><span class="line">      <span class="attr">position:</span> <span class="string">bottomCenter</span></span><br><span class="line">      <span class="attr">networks:</span> <span class="string">Weibo,Wechat,Douban,QQZone,Twitter,Facebook</span></span><br><span class="line">  <span class="attr">float:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">options:</span></span><br><span class="line">      <span class="attr">iconStyle:</span> <span class="string">box</span></span><br><span class="line">      <span class="attr">boxForm:</span> <span class="string">horizontal</span></span><br><span class="line">      <span class="attr">position:</span> <span class="string">middleRight</span></span><br><span class="line">      <span class="attr">networks:</span> <span class="string">Weibo,Wechat,Douban,QQZone,Twitter,Facebook</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Share-js"><a href="#Share-js" class="headerlink" title="Share.js"></a>Share.js</h4><figure class="highlight yml"><figcaption><span>next/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># share.js</span></span><br><span class="line"><span class="comment"># See: https://github.com/overtrue/share.js</span></span><br><span class="line"><span class="comment"># networks: weibo,qq,wechat,tencent,douban,qzone,linkedin,diandian,facebook,twitter,google</span></span><br><span class="line"><span class="attr">sharejs:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">cdn:</span></span><br><span class="line">    <span class="attr">js:</span> <span class="string">//cdn.jsdelivr.net/npm/social-share.js@1/dist/js/social-share.min.js</span></span><br><span class="line">    <span class="attr">css:</span> <span class="string">//cdn.jsdelivr.net/npm/social-share.js@1/dist/js/social-share.min.css</span></span><br><span class="line">  <span class="attr">networks:</span> <span class="string">weibo,qq,wechat,tencent,douban,qzone,linkedin,diandian,facebook,twitter,google</span></span><br><span class="line">  <span class="attr">wechat_qrcode:</span></span><br><span class="line">    <span class="attr">title:</span> <span class="string">share.title</span></span><br><span class="line">    <span class="attr">prompt:</span> <span class="string">share.prompt</span></span><br></pre></td></tr></table></figure>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head2.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cg666-debug" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-fab fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:plc571032567@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-fa fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo-NexT-Share"><span class="nav-number">1.</span> <span class="nav-text">Hexo NexT Share</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install"><span class="nav-number">1.1.</span> <span class="nav-text">Install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure"><span class="nav-number">1.2.</span> <span class="nav-text">Configure</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Likely"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Likely</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Need-More-Share"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Need More Share</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Share-js"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">Share.js</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">橙鸽</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">3.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'Rhtn0FXWT4l0bqG01RGqB6uR-gzGzoHsz',
+        appKey: 'AIhJmh1p4ma83Zld5qMPLtit',
+        placeholder: '橙鸽赛高',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  
+
+  <script async src="/js/src/cursor/fireworks.js"></script>
+
+
+  
+  
+    <script src="/js/src/text_input/text_input.js"></script>
+    <script>
+      POWERMODE.colorful = true;
+      POWERMODE.shake = false;
+      document.body.addEventListener('input', POWERMODE);
+    </script>
+  
+  
+
+  <!-- 雪花特效 -->
+  <script type="text/javascript">
+    var windowWidth = $(window).width();
+    if (windowWidth > 480) {
+      document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+    }
+  </script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?95010b98e01c6f9662a8fd204469cabc"></script><script>L2Dwidget.init({"dialog":{"enable":true,"hitokoto":false,"text":["跟我一起喊：橙鸽赛高！","kira kira doki doki","橙鸽打球像库里！"]},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/mikoto.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":20,"vOffset":0},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
+</html>
+
