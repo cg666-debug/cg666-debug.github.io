@@ -2,9 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cg666-debug.github.io/posts/23250152/</loc>
+    
+    <lastmod>2023-06-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://cg666-debug.github.io/posts/2c29b684/</loc>
     
-    <lastmod>2023-06-14</lastmod>
+    <lastmod>2023-06-19</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -56,15 +65,6 @@
   </url>
   
   <url>
-    <loc>http://cg666-debug.github.io/posts/23250152/</loc>
-    
-    <lastmod>2023-06-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://cg666-debug.github.io/about/index.html</loc>
     
     <lastmod>2023-06-12</lastmod>
@@ -101,20 +101,6 @@
 
   
   <url>
-    <loc>http://cg666-debug.github.io/tags/java/</loc>
-    <lastmod>2023-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://cg666-debug.github.io/tags/Unit-Test/</loc>
-    <lastmod>2023-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://cg666-debug.github.io/tags/opencv/</loc>
     <lastmod>2023-06-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -135,17 +121,31 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>http://cg666-debug.github.io/categories/java/</loc>
+    <loc>http://cg666-debug.github.io/tags/java/</loc>
     <lastmod>2023-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
+    <loc>http://cg666-debug.github.io/tags/Unit-Test/</loc>
+    <lastmod>2023-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
     <loc>http://cg666-debug.github.io/categories/python/</loc>
+    <lastmod>2023-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://cg666-debug.github.io/categories/java/</loc>
     <lastmod>2023-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
